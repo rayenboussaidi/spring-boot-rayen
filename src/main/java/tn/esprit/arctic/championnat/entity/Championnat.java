@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -23,4 +25,11 @@ public class Championnat {
     private String libelleC;
 
     private Integer annee;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "detail_championnat_code")
+    private DetailChampionnat detailChampionnat;
+
+    @OneToMany(mappedBy = "championnat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Course> courses = new java.util.HashSet<>();
 }

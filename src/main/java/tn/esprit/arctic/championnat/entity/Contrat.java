@@ -22,4 +22,12 @@ public class Contrat {
     private String annee;
 
     private Boolean archived;
+
+    @ManyToOne
+    @JoinColumn(name = "equipe_id")
+    private Equipe equipe;
+
+    @ManyToOne
+    @JoinColumn(name = "sponsor_id")
+    private Sponsor sponsor;
 }
