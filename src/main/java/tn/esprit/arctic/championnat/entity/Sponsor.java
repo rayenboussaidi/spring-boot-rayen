@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,10 @@ public class Sponsor {
     private Float budgetAnnuel;
 
     private Boolean bloquerContrat;
+    Boolean archived;
+    LocalDate dateCreation;
+    LocalDate dateDerniereModification;
+
 
     @OneToMany(mappedBy = "sponsor", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Contrat> contrats = new java.util.HashSet<>();
