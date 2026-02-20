@@ -7,7 +7,9 @@ import tn.esprit.arctic.championnat.entity.Sponsor;
 
 import java.util.List;
 
+@Service
 public class Sponsorservice implements Isponsorservice{
+    @Autowired
     SponsorRepository sp;
 
     @Override
