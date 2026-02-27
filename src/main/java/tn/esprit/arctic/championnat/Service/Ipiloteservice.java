@@ -4,6 +4,6 @@ import tn.esprit.arctic.championnat.entity.Pilote;
 
 public interface Ipiloteservice {
 
-    Pilote ajouterpilote(Pilote pilote);
+    String addPilote(Pilote p);
 }
 

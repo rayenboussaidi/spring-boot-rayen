@@ -11,8 +11,9 @@ public class Piloteservice implements Ipiloteservice{
     PiloteRepository pl;
 
     @Override
-    public Pilote ajouterpilote(Pilote pilote) {
-       return  pl.save(pilote);
+    public String addPilote(Pilote p) {
+        pl.save(p);
+        return "Pilote ajouté";
     }
 }
 
