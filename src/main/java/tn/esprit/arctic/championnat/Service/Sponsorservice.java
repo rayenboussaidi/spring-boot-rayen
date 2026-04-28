@@ -2,7 +2,9 @@ package tn.esprit.arctic.championnat.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.arctic.championnat.Repository.ContratRepository;
 import tn.esprit.arctic.championnat.Repository.SponsorRepository;
+import tn.esprit.arctic.championnat.entity.Contrat;
 import tn.esprit.arctic.championnat.entity.Sponsor;
 
 import java.time.LocalDate;
@@ -12,6 +14,9 @@ import java.util.List;
 public class Sponsorservice implements Isponsorservice{
     @Autowired
     SponsorRepository sp;
+    
+    @Autowired
+    ContratRepository contratRepository;
 
     @Override
     public Sponsor ajouterSponsor(Sponsor sponsor) {
@@ -64,5 +69,31 @@ public class Sponsorservice implements Isponsorservice{
         sp.save(sponsor);
         return sponsor.getArchived();
 
+    }
+    
+    @Override
+    public Double pourcentageBudgetAnnuelConsomme(Long idSponsor) {
+        int anneeActuelle = LocalDate.now().getYear();
+        String anneeStr = String.valueOf(anneeActuelle);
+        
+        Sponsor sponsor = sp.findById(idSponsor).orElse(null);
+        if (sponsor == null || sponsor.getBudgetAnnuel() == null || sponsor.getBudgetAnnuel() == 0) {
+            return 0.0;
+        }
+        
+        // Get all active contracts for this sponsor in current year
+        List<Contrat> contrats = contratRepository.findBySponsorAndAnneeActif(idSponsor, anneeStr);
+        
+        // Calculate total amount spent
+        Float totalSpent = 0f;
+        for (Contrat contrat : contrats) {
+            if (contrat.getMontant() != null) {
+                totalSpent += contrat.getMontant();
+            }
+        }
+        
+        // Calculate percentage
+        Double percentage = (totalSpent.doubleValue() / sponsor.getBudgetAnnuel().doubleValue()) * 100;
+        return percentage;
     }
 }

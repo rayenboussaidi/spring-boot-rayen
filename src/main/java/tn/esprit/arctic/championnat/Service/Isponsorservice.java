@@ -18,4 +18,6 @@ public interface Isponsorservice {
     Sponsor recupererSponsor(Long idSponsor);
 
     Boolean archiverSponsor(Long idSponsor);
+    
+    Double pourcentageBudgetAnnuelConsomme(Long idSponsor);
 }
